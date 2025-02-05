@@ -22,7 +22,7 @@ Request/Response Format:
 
 How to run:
 1.  Clone the Repository:
-git clone https://github.com/Kayce-joy/HGC-API.git
+git clone https://github.com/Kayce-joy/HNGStage1.git
 cd HGC-API
 2.  Create Virtual Environment & Install Dependencies
 python -m venv venv
