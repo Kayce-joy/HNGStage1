@@ -31,7 +31,10 @@ def is_perfect(n):
 def classify_number():
     num = request.args.get("number")
     
-    if not num or not num.isdigit():
+    if not num: 
+        return jsonify({"number": "null", "error": "true"}), 400
+
+    if not num.isdigit():
         return jsonify({"number": num, "error": True}), 400
     
     num = int(num)
