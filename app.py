@@ -1,7 +1,13 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
+CORS(app)
+
+@app.route('/')
+def home():
+    return "Welcome to the Number Classifier API! Use /api/classify-number?number=YOUR_NUMBER"
 
 def is_prime(n):
     if n < 2:
