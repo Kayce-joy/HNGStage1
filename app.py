@@ -18,9 +18,9 @@ def is_prime(n):
     return True
 
 def is_armstrong(n):
-    digits = [int(digit) for digit in str(n)]
+    digits = [int(digit) for digit in str(abs(n))]  # Handle negative numbers
     power = len(digits)
-    return sum(digit ** power for digit in digits) == n
+    return sum(digit ** power for digit in digits) == abs(n)
 
 def is_perfect(n):
     if n <= 0:  
@@ -34,29 +34,39 @@ def classify_number():
     if not num: 
         return jsonify({"number": "null", "error": "true"}), 400
 
-    if not num.isdigit():
+    if not num.isdigit() and not (num.startswith('-') and num[1:].isdigit()):
         return jsonify({"number": num, "error": True}), 400
     
     num = int(num)
     properties = []
     
-    if is_armstrong(num):
-        properties.append("armstrong")
     
+    if num >= 0:
+        if is_armstrong(num):
+            properties.append("armstrong")
+        
+        if is_prime(num):
+            properties.append("prime")
+        
+        if is_perfect(num):
+            properties.append("perfect")
+    
+   
     properties.append("odd" if num % 2 else "even")
     
-    # Fetch fun fact with updated URL format
-
-    response = requests.get(f'http://numbersapi.com/{int(num)}/math?json=true')
+   
+    response = requests.get(f'http://numbersapi.com/{abs(num)}/math?json=true')
     if response.status_code == 200:
         fun_fact = response.json().get('text', 'No fun fact found.')  
-    
+    else:
+        fun_fact = "No fun fact found."
+
     return jsonify({
         "number": num,
-        "is_prime": is_prime(num),
-        "is_perfect": is_perfect(num),
+        "is_prime": is_prime(num) if num >= 0 else False,
+        "is_perfect": is_perfect(num) if num >= 0 else False,
         "properties": properties,
-        "digit_sum": sum(int(d) for d in str(num)),
+        "digit_sum": sum(int(d) for d in str(abs(num))),  
         "fun_fact": fun_fact
     })
 
