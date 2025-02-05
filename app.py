@@ -31,10 +31,11 @@ def is_perfect(n):
 def classify_number():
     num = request.args.get("number")
     
+    # Return error if the number is not provided
     if not num: 
         return jsonify({"number": "null", "error": True}), 400
 
-    # Validate that input is numeric or a valid negative number
+    # Validate that the input is numeric or a valid negative number
     if not num.isdigit() and not (num.startswith('-') and num[1:].isdigit()):
         return jsonify({"number": num, "error": True}), 400
     
