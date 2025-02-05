@@ -23,7 +23,7 @@ Request/Response Format:
 How to run:
 1.  Clone the Repository:
 git clone https://github.com/Kayce-joy/HNGStage1.git
-cd HGC-API
+cd HNGStage1
 2.  Create Virtual Environment & Install Dependencies
 python -m venv venv
 source venv/bin/activate   # On macOS/Linux
