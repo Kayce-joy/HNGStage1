@@ -23,7 +23,7 @@ def is_armstrong(n):
     return sum(digit ** power for digit in digits) == abs(n)
 
 def is_perfect(n):
-    if n <= 0:  
+    if n <= 0:
         return False
     return sum([i for i in range(1, n) if n % i == 0]) == n
 
@@ -32,15 +32,16 @@ def classify_number():
     num = request.args.get("number")
     
     if not num: 
-        return jsonify({"number": "null", "error": "true"}), 400
+        return jsonify({"number": "null", "error": True}), 400
 
+    # Validate that input is numeric or a valid negative number
     if not num.isdigit() and not (num.startswith('-') and num[1:].isdigit()):
         return jsonify({"number": num, "error": True}), 400
     
     num = int(num)
     properties = []
     
-    
+    # Classify number properties
     if num >= 0:
         if is_armstrong(num):
             properties.append("armstrong")
@@ -51,10 +52,9 @@ def classify_number():
         if is_perfect(num):
             properties.append("perfect")
     
-   
     properties.append("odd" if num % 2 else "even")
     
-   
+    # Retrieve fun fact from numbersapi
     response = requests.get(f'http://numbersapi.com/{abs(num)}/math?json=true')
     if response.status_code == 200:
         fun_fact = response.json().get('text', 'No fun fact found.')  
